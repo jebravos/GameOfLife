@@ -23,4 +23,15 @@ public class Cell {
     public boolean isDead(){
         return !this.isAlive();
     }
+
+    public void print(){
+        char c = this.isAlive() ? 'X' : 'O';
+        System.out.print(c);
+    }
+
+
+    @Override
+    public String toString() {
+        return String.valueOf(status);
+    }
 }
