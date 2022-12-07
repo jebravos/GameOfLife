@@ -7,24 +7,31 @@ import org.junit.jupiter.api.Test;
 import static org.bravo.Cell.alive;
 import static org.bravo.Cell.dead;
 
-public class LifeTests {
+class LifeTests {
 
     private Cell[][] seed = {
-            {alive(), dead(),  alive()},
-            {alive(), dead(),  dead()},
-            {dead(),  alive(), alive()},
+            {alive(), dead(),  alive()}, // 0 1 2 x
+            {alive(), dead(),  dead()},  // 1
+            {dead(),  alive(), alive()}, // 2
+                                         // y
     };
 
 
     @Test
     @DisplayName("Any live cell with two or three live neighbours survives.")
-    public void t0(){
+    void t0(){
         // Given seed
         Life life = new Life(seed);
         // When
         life.tick();
+        life.print();
         // then
-        Assertions.assertTrue(false);
+        Assertions.assertTrue(life.getCell(0,1).isPresent());
+        Assertions.assertTrue(life.getCell(0,1).get().isAlive());
+
+        Assertions.assertTrue(life.getCell(1,2).isPresent());
+        Assertions.assertTrue(life.getCell(1,2).get().isAlive());
+
     }
 
     @Test
