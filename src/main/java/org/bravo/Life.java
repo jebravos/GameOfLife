@@ -20,10 +20,7 @@ public class Life {
         for (int x = 0; x < matrix.length; x++) {
             for (int y = 0; y < matrix[x].length; y++) {
                 if(matrix[x][y].isAlive()){
-                    final long aliveNeighbors = getNeighbors(x, y)
-                            .stream()
-                            .filter(Cell::isAlive)
-                            .count();
+                    final long aliveNeighbors = countAliveNeighbors(x, y);
 
                     if(aliveNeighbors == 2 || aliveNeighbors == 3) {
                         newMatrix[x][y] = this.matrix[x][y]; // or Cell.alive();
@@ -39,6 +36,13 @@ public class Life {
         }
 
         this.matrix = newMatrix;
+    }
+
+    private long countAliveNeighbors(final int x, final int y) {
+        return getNeighbors(x, y)
+                .stream()
+                .filter(Cell::isAlive)
+                .count();
     }
 
     private List<Cell> getNeighbors(final int x, final int y) {
@@ -72,9 +76,9 @@ public class Life {
     }
 
     public void print(){
-        for (int x = 0; x < matrix.length; x++) {
-            for (int y = 0; y < matrix[x].length; y++) {
-                matrix[x][y].print();
+        for (final Cell[] cells : matrix) {
+            for (final Cell cell : cells) {
+                cell.print();
                 System.out.print(' ');
             }
             System.out.println();
