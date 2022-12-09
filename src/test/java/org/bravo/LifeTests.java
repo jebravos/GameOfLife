@@ -10,11 +10,23 @@ import static org.bravo.Cell.dead;
 class LifeTests {
 
     private Cell[][] seed = {
-            {alive(), dead(),  alive()}, // 0 1 2 x
-            {alive(), dead(),  dead()},  // 1
-            {dead(),  alive(), alive()}, // 2
+            { alive(new Coordinates(0,0)), dead(new Coordinates(1,0)),  alive(new Coordinates(2,0)) }, // 0 1 2 x
+            { alive(new Coordinates(0,1)), dead(new Coordinates(1,1)),  dead(new Coordinates(2,1)) },  // 1
+            { dead(new Coordinates(0,2)),  alive(new Coordinates(1,2)), alive(new Coordinates(2,2)) } // 2
                                          // y
     };
+
+    @Test
+    @DisplayName("Any live cell with two or three live neighbours survives.")
+    void print(){
+        // Given seed
+        Life life = new Life(seed);
+        // When
+        life.print();
+        System.out.println("------------------------------");
+        life.print_();
+        System.out.println("------------------------------");
+    }
 
     @Test
     @DisplayName("Any live cell with two or three live neighbours survives.")
