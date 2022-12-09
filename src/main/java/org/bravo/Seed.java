@@ -22,7 +22,7 @@ public class Seed extends CellsWrapper {
                 List<Cell> yCells = mapOfCells.computeIfAbsent(y, k -> new LinkedList<>());
 
                 final Cell cell = Cell.newCell(this.matrix[y][x].getStatus(), new Coordinates(x, y));
-                final List<Cell> neighbors = this.getNeighbors(cell.getCoordinates());
+                final List<Cell> neighbors = this.getNeighbors(cell);
                 cell.setNeighbors(neighbors);
                 yCells.add(cell);
 
@@ -34,7 +34,7 @@ public class Seed extends CellsWrapper {
     }
 
     @Override
-    public Optional<Cell> getCell(Coordinates coordinates) {
+    public Optional<Cell> findCell(Coordinates coordinates) {
 
         try {
             return Optional.of(this.matrix[coordinates.y()][coordinates.x()]);

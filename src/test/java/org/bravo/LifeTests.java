@@ -28,11 +28,11 @@ class LifeTests {
         life.print();
         System.out.println("------------------------------");
         // then
-        Assertions.assertTrue(life.getCell(0,1).isPresent());
-        Assertions.assertTrue(life.getCell(0,1).get().isAlive());
+        Assertions.assertTrue(life.findCell(0,1).isPresent());
+        Assertions.assertTrue(life.findCell(0,1).get().isAlive());
 
-        Assertions.assertTrue(life.getCell(1,2).isPresent());
-        Assertions.assertTrue(life.getCell(1,2).get().isAlive());
+        Assertions.assertTrue(life.findCell(1,2).isPresent());
+        Assertions.assertTrue(life.findCell(1,2).get().isAlive());
 
     }
 
@@ -48,11 +48,11 @@ class LifeTests {
         life.print();
         System.out.println("------------------------------");
         // then
-        Assertions.assertTrue(life.getCell(1,0).isPresent());
-        Assertions.assertTrue(life.getCell(1,0).get().isAlive());
+        Assertions.assertTrue(life.findCell(1,0).isPresent());
+        Assertions.assertTrue(life.findCell(1,0).get().isAlive());
 
-        Assertions.assertTrue(life.getCell(2,1).isPresent());
-        Assertions.assertTrue(life.getCell(2,1).get().isAlive());
+        Assertions.assertTrue(life.findCell(2,1).isPresent());
+        Assertions.assertTrue(life.findCell(2,1).get().isAlive());
     }
     @Test
     @DisplayName("All other live cells die in the next generation. Similarly, all other dead cells stay dead.")
@@ -66,20 +66,20 @@ class LifeTests {
         life.print();
         System.out.println("------------------------------");
         // then
-        Assertions.assertTrue(life.getCell(0,0).isPresent());
-        Assertions.assertTrue(life.getCell(0,0).get().isDead());
+        Assertions.assertTrue(life.findCell(0,0).isPresent());
+        Assertions.assertTrue(life.findCell(0,0).get().isDead());
 
-        Assertions.assertTrue(life.getCell(0,2).isPresent());
-        Assertions.assertTrue(life.getCell(0,2).get().isDead());
+        Assertions.assertTrue(life.findCell(0,2).isPresent());
+        Assertions.assertTrue(life.findCell(0,2).get().isDead());
 
-        Assertions.assertTrue(life.getCell(1,1).isPresent());
-        Assertions.assertTrue(life.getCell(1,1).get().isDead());
+        Assertions.assertTrue(life.findCell(1,1).isPresent());
+        Assertions.assertTrue(life.findCell(1,1).get().isDead());
 
-        Assertions.assertTrue(life.getCell(2,0).isPresent());
-        Assertions.assertTrue(life.getCell(2,0).get().isDead());
+        Assertions.assertTrue(life.findCell(2,0).isPresent());
+        Assertions.assertTrue(life.findCell(2,0).get().isDead());
 
-        Assertions.assertTrue(life.getCell(2,2).isPresent());
-        Assertions.assertTrue(life.getCell(2,2).get().isDead());
+        Assertions.assertTrue(life.findCell(2,2).isPresent());
+        Assertions.assertTrue(life.findCell(2,2).get().isDead());
     }
 
 }

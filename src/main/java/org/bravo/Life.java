@@ -28,7 +28,7 @@ public class Life extends CellsWrapper{
                             .forEach(cell -> {
 
                                 List<Cell> rowCells = newGenerationMapOfCells.computeIfAbsent(y, k -> new LinkedList<>());
-                                newGenerationMapOfCells.get(y).add(newGenerationFromCell(cell.getCoordinates()));
+                                newGenerationMapOfCells.get(y).add(newGenerationFromCell(cell));
 
                             });
 
@@ -40,36 +40,36 @@ public class Life extends CellsWrapper{
         tick_();
     }
 
-    private Cell newGenerationFromCell(Coordinates coordinates) {
+    private Cell newGenerationFromCell(Cell cell) {
 
-        if (getCell(coordinates).get().isAlive()) {
-            return newGenerationFromAliveCell(coordinates);
+        if (findCell(cell).get().isAlive()) {
+            return newGenerationFromAliveCell(cell);
         } else {
-            return newGenerationFromDeadCell(coordinates);
+            return newGenerationFromDeadCell(cell);
         }
     }
 
-    private Cell newGenerationFromDeadCell(Coordinates coordinates) {
-        final long aliveNeighbors = countAliveNeighbors(coordinates);
+    private Cell newGenerationFromDeadCell(Cell cell) {
+        final long aliveNeighbors = countAliveNeighbors(cell);
 
         if (aliveNeighbors == 3) {
-            return Cell.alive(coordinates);
+            return Cell.alive(cell.getCoordinates());
         } else {
-            return Cell.dead(coordinates);
+            return Cell.dead(cell.getCoordinates());
         }
     }
 
-    private Cell newGenerationFromAliveCell(Coordinates coordinates) {
-        final long aliveNeighbors = countAliveNeighbors(coordinates);
+    private Cell newGenerationFromAliveCell(Cell cell) {
+        final long aliveNeighbors = countAliveNeighbors(cell);
         if (aliveNeighbors == 2 || aliveNeighbors == 3) {
-            return Cell.alive(coordinates);
+            return Cell.alive(cell.getCoordinates());
         } else {
-            return Cell.dead(coordinates);
+            return Cell.dead(cell.getCoordinates());
         }
     }
 
-    private long countAliveNeighbors(Coordinates coordinates) {
-        return getNeighbors(coordinates)
+    private long countAliveNeighbors(Cell cell) {
+        return getNeighbors(cell)
                 .stream()
                 .filter(Cell::isAlive)
                 .count();
@@ -77,7 +77,7 @@ public class Life extends CellsWrapper{
 
 
     @Override
-    public Optional<Cell> getCell(final Coordinates coordinates) {
+    public Optional<Cell> findCell(final Coordinates coordinates) {
         return Optional.ofNullable(this.mapOfCells.get(coordinates.y()))
                 .orElse(List.of())
                 .stream()
@@ -86,8 +86,8 @@ public class Life extends CellsWrapper{
     }
 
 
-    public Optional<Cell> getCell(int x, int y) {
-        return getCell(new Coordinates(x,y));
+    public Optional<Cell> findCell(int x, int y) {
+        return findCell(new Coordinates(x,y));
     }
 
 
