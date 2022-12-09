@@ -12,22 +12,19 @@ public class Life {
 
     private Cell[][] matrix;
 
-
     Map<Integer, List<Cell>> mapOfCells = new LinkedHashMap();
 
     public Life(Cell[][] seed) {
         this.matrix = seed;
 
-        for (int x = 0; x < matrix.length; x++) {
+        for (int x = 0; x < seed.length; x++) {
 
-//            List<Cell> cells = new LinkedList<>();
-
-            for (int y = 0; y < matrix[x].length; y++) {
+            for (int y = 0; y < seed[x].length; y++) {
 
                 List<Cell> yCells = mapOfCells.computeIfAbsent(y, k -> new LinkedList<>());
 
                 final Cell cell = Cell.newCell(seed[y][x].getStatus(), new Coordinates(x, y));
-                final List<Cell> neighbors = getNeighbors(cell.getCoordinates());
+                final List<Cell> neighbors = getNeighbors(cell.getCoordinates(), this.matrix);
                 cell.setNeighbors(neighbors);
                 yCells.add(cell);
 
@@ -58,22 +55,13 @@ public class Life {
         mapOfCells = newGenerationMapOfCells;
     }
     public void tick() {
-//
-//        final Cell[][] newMatrix = new Cell[this.matrix.length][this.matrix[0].length];
-//
-//        for (int x = 0; x < matrix.length; x++) {
-//            for (int y = 0; y < matrix[x].length; y++) {
-//                newMatrix[x][y] = newGenerationFromCell(new Coordinates(x, y));
-//            }
-//        }
-//        this.matrix = newMatrix;
-
         tick_();
     }
 
     private Cell newGenerationFromCell(Coordinates coordinates) {
 
-        if (getCell(coordinates).get().isAlive()) {
+        if (getCell_(coordinates).get().isAlive()) {
+//        if (getCell(coordinates, this.matrix).get().isAlive()) {
             return newGenerationFromAliveCell(coordinates);
         } else {
             return newGenerationFromDeadCell(coordinates);
@@ -106,61 +94,64 @@ public class Life {
                 .count();
     }
 
+    private List<Cell> getNeighbors(Coordinates coordinates, final Cell[][] matrix1) {
+        List<Cell> neighbors = new ArrayList<>();
+        addNeighbor(neighbors, getCell(coordinates.move(-1, -1), matrix1));
+        addNeighbor(neighbors, getCell(coordinates.move(0, -1), matrix1));
+        addNeighbor(neighbors, getCell(coordinates.move(1, -1), matrix1));
+
+        addNeighbor(neighbors, getCell(coordinates.move(-1, 0), matrix1));
+        addNeighbor(neighbors, getCell(coordinates.move(1, 0), matrix1));
+
+        addNeighbor(neighbors, getCell(coordinates.move(-1, 1), matrix1));
+        addNeighbor(neighbors, getCell(coordinates.move(0, 1), matrix1));
+        addNeighbor(neighbors, getCell(coordinates.move(1, 1), matrix1));
+
+        return neighbors;
+    }
     private List<Cell> getNeighbors(Coordinates coordinates) {
         List<Cell> neighbors = new ArrayList<>();
-        addNeighbor(neighbors, coordinates.move(-1, -1));
-        addNeighbor(neighbors, coordinates.move(0, -1));
-        addNeighbor(neighbors, coordinates.move(1, -1));
+        addNeighbor(neighbors, getCell_(coordinates.move(-1, -1)));
+        addNeighbor(neighbors, getCell_(coordinates.move(0, -1)));
+        addNeighbor(neighbors, getCell_(coordinates.move(1, -1)));
 
-        addNeighbor(neighbors, coordinates.move(-1, 0));
-        addNeighbor(neighbors, coordinates.move(1, 0));
+        addNeighbor(neighbors, getCell_(coordinates.move(-1, 0)));
+        addNeighbor(neighbors, getCell_(coordinates.move(1, 0)));
 
-        addNeighbor(neighbors, coordinates.move(-1, 1));
-        addNeighbor(neighbors, coordinates.move(0, 1));
-        addNeighbor(neighbors, coordinates.move(1, 1));
+        addNeighbor(neighbors, getCell_(coordinates.move(-1, 1)));
+        addNeighbor(neighbors, getCell_(coordinates.move(0, 1)));
+        addNeighbor(neighbors, getCell_(coordinates.move(1, 1)));
 
         return neighbors;
     }
 
-    private void addNeighbor(final List<Cell> neighbors, Coordinates coordinates) {
-        getCell(coordinates)
+    private void addNeighbor(final List<Cell> neighbors, final Optional<Cell> cell) {
+        cell
                 .ifPresent(neighbors::add);
     }
 
-    public Optional<Cell> getCell(Coordinates coordinates) {
+    public Optional<Cell> getCell(Coordinates coordinates, final Cell[][] matrix) {
 
         try {
-            return Optional.of(this.matrix[coordinates.y()][coordinates.x()]);
+            return Optional.of(matrix[coordinates.y()][coordinates.x()]);
         } catch (IndexOutOfBoundsException e) {
             return Optional.empty();
         }
     }
 
+    public Optional<Cell> getCell(int x, int y) {
+        return getCell_(new Coordinates(x,y));
+    }
+
     public Optional<Cell> getCell_(Coordinates coordinates) {
-        return this.mapOfCells.get(coordinates.y())
+        return Optional.ofNullable(this.mapOfCells.get(coordinates.y()))
+                .orElse(List.of())
                 .stream()
                 .filter(cell -> cell.getCoordinates().equals(coordinates))
                 .findAny();
     }
 
-    public Optional<Cell> getCell(int x, int y) {
-        return getCell_(new Coordinates(x,y));
-//        return getCell(new Coordinates(x, y));
-    }
-
     public void print() {
-//        for (final Cell[] cells : matrix) {
-//            for (final Cell cell : cells) {
-//                cell.print();
-//                System.out.print(' ');
-//            }
-//            System.out.println();
-//        }
-
-        print_();
-
-    }
-    public void print_() {
         this.mapOfCells.keySet().stream()
                 .sorted(Comparator.naturalOrder())
                 .forEach(y -> {
