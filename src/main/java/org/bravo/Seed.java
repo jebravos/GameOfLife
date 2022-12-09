@@ -39,7 +39,7 @@ public class Seed {
         return mapOfCells;
     }
 
-    public List<Cell> getNeighbors(Coordinates coordinates) {
+    private List<Cell> getNeighbors(Coordinates coordinates) {
         List<Cell> neighbors = new ArrayList<>();
         addNeighbor(neighbors, getCell(coordinates.move(-1, -1), this.matrix));
         addNeighbor(neighbors, getCell(coordinates.move(0, -1), this.matrix));
@@ -60,7 +60,7 @@ public class Seed {
                 .ifPresent(neighbors::add);
     }
 
-    public Optional<Cell> getCell(Coordinates coordinates, final Cell[][] matrix) {
+    private Optional<Cell> getCell(Coordinates coordinates, final Cell[][] matrix) {
 
         try {
             return Optional.of(matrix[coordinates.y()][coordinates.x()]);
