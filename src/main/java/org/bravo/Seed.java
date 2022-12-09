@@ -15,19 +15,15 @@ public class Seed {
         this.matrix = seed;
     }
 
-    public Cell[][] getMatrix() {
-        return matrix;
-    }
-
     public Map<Integer, List<Cell>> toMap(){
         Map<Integer, List<Cell>> mapOfCells = new LinkedHashMap();
-        for (int x = 0; x < this.getMatrix().length; x++) {
+        for (int x = 0; x < this.matrix.length; x++) {
 
-            for (int y = 0; y < this.getMatrix()[x].length; y++) {
+            for (int y = 0; y < this.matrix[x].length; y++) {
 
                 List<Cell> yCells = mapOfCells.computeIfAbsent(y, k -> new LinkedList<>());
 
-                final Cell cell = Cell.newCell(this.getMatrix()[y][x].getStatus(), new Coordinates(x, y));
+                final Cell cell = Cell.newCell(this.matrix[y][x].getStatus(), new Coordinates(x, y));
                 final List<Cell> neighbors = this.getNeighbors(cell.getCoordinates());
                 cell.setNeighbors(neighbors);
                 yCells.add(cell);
@@ -41,16 +37,16 @@ public class Seed {
 
     private List<Cell> getNeighbors(Coordinates coordinates) {
         List<Cell> neighbors = new ArrayList<>();
-        addNeighbor(neighbors, getCell(coordinates.move(-1, -1), this.matrix));
-        addNeighbor(neighbors, getCell(coordinates.move(0, -1), this.matrix));
-        addNeighbor(neighbors, getCell(coordinates.move(1, -1), this.matrix));
+        addNeighbor(neighbors, getCell(coordinates.move(-1, -1)));
+        addNeighbor(neighbors, getCell(coordinates.move(0, -1)));
+        addNeighbor(neighbors, getCell(coordinates.move(1, -1)));
 
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 0), this.matrix));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 0), this.matrix));
+        addNeighbor(neighbors, getCell(coordinates.move(-1, 0)));
+        addNeighbor(neighbors, getCell(coordinates.move(1, 0)));
 
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 1), this.matrix));
-        addNeighbor(neighbors, getCell(coordinates.move(0, 1), this.matrix));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 1), this.matrix));
+        addNeighbor(neighbors, getCell(coordinates.move(-1, 1)));
+        addNeighbor(neighbors, getCell(coordinates.move(0, 1)));
+        addNeighbor(neighbors, getCell(coordinates.move(1, 1)));
 
         return neighbors;
     }
@@ -60,10 +56,10 @@ public class Seed {
                 .ifPresent(neighbors::add);
     }
 
-    private Optional<Cell> getCell(Coordinates coordinates, final Cell[][] matrix) {
+    private Optional<Cell> getCell(Coordinates coordinates) {
 
         try {
-            return Optional.of(matrix[coordinates.y()][coordinates.x()]);
+            return Optional.of(this.matrix[coordinates.y()][coordinates.x()]);
         } catch (IndexOutOfBoundsException e) {
             return Optional.empty();
         }
