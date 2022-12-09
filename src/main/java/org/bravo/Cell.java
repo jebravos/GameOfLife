@@ -24,21 +24,10 @@ public class Cell implements Comparable<Cell> {
     public static Cell newCell(Status status, Coordinates coordinates){
         return new Cell(status, coordinates);
     }
-    public static Cell newCell(int status, Coordinates coordinates){
-        return status == 0 ? dead(coordinates) : alive(coordinates);
-    }
 
     private Cell(Status status, Coordinates coordinates){
         this.status = status;
         this.coordinates = coordinates;
-    }
-
-    public static Cell alive(){
-        return new Cell(ALIVE, null);
-    }
-
-    public static Cell dead(){
-        return new Cell(DEAD, null);
     }
 
     public static Cell alive(Coordinates coordinates){

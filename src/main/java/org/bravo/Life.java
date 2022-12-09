@@ -14,7 +14,7 @@ public class Life extends CellsWrapper {
 
     public Life(Seed seed) {
 
-        if(seed == null){
+        if (seed == null) {
             throw new IllegalArgumentException("Seed must not be empty");
         }
 
@@ -32,28 +32,22 @@ public class Life extends CellsWrapper {
 
         this.mapOfCells.keySet()
                 .forEach(y -> this.mapOfCells.get(y)
-                        .forEach(cell -> newGenerationFromCell(cell)
-                                .ifPresent(c -> newGenerationMapOfCells.computeIfAbsent(y, k -> new LinkedList<>())
-                                        .add(c)
-                                )
+                        .stream()
+                        .map(this::newGenerationFromCell)
+                        .forEach(cell -> newGenerationMapOfCells.computeIfAbsent(y, k -> new LinkedList<>())
+                                .add(cell)
                         )
                 );
 
         mapOfCells = newGenerationMapOfCells;
     }
 
-    private Optional<Cell> newGenerationFromCell(Cell cell) {
+    private Cell newGenerationFromCell(Cell cell) {
 
-        final Optional<Cell> cell1 = findCell(cell);
-
-        if (cell1.isEmpty()) {
-            return cell1;
-        }
-
-        if (cell1.get().isAlive()) {
-            return Optional.ofNullable(newGenerationFromAliveCell(cell));
+        if (cell.isAlive()) {
+            return newGenerationFromAliveCell(cell);
         } else {
-            return Optional.ofNullable(newGenerationFromDeadCell(cell));
+            return newGenerationFromDeadCell(cell);
         }
 
     }
