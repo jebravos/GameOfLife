@@ -19,17 +19,23 @@ public class Life {
 
         for (int x = 0; x < matrix.length; x++) {
             for (int y = 0; y < matrix[x].length; y++) {
-                if(matrix[x][y].isAlive()){
+                if(getCell(x,y).get().isAlive()){
                     final long aliveNeighbors = countAliveNeighbors(x, y);
 
                     if(aliveNeighbors == 2 || aliveNeighbors == 3) {
-                        newMatrix[x][y] = this.matrix[x][y]; // or Cell.alive();
+                        newMatrix[x][y] = Cell.alive(); // or Cell.alive();
                     } else {
                         newMatrix[x][y] = Cell.dead();
                     }
 
                 } else {
-                    newMatrix[x][y] = this.matrix[x][y];
+                    final long aliveNeighbors = countAliveNeighbors(x, y);
+
+                    if(aliveNeighbors == 3) {
+                        newMatrix[x][y] = Cell.alive(); // or Cell.alive();
+                    } else {
+                        newMatrix[x][y] = Cell.dead();
+                    }
                 }
 
             }

@@ -23,6 +23,8 @@ class LifeTests {
         // Given seed
         Life life = new Life(seed);
         // When
+        life.print();
+        System.out.println("------------------------------");
         life.tick();
         life.print();
         System.out.println("------------------------------");
@@ -41,6 +43,8 @@ class LifeTests {
         // Given seed
         Life life = new Life(seed);
         // When
+        life.print();
+        System.out.println("------------------------------");
         life.tick();
         life.print();
         System.out.println("------------------------------");
