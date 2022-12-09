@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class Seed {
+public class Seed extends CellsWrapper {
 
     private Cell[][] matrix;
 
@@ -35,28 +35,8 @@ public class Seed {
         return mapOfCells;
     }
 
-    private List<Cell> getNeighbors(Coordinates coordinates) {
-        List<Cell> neighbors = new ArrayList<>();
-        addNeighbor(neighbors, getCell(coordinates.move(-1, -1)));
-        addNeighbor(neighbors, getCell(coordinates.move(0, -1)));
-        addNeighbor(neighbors, getCell(coordinates.move(1, -1)));
-
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 0)));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 0)));
-
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 1)));
-        addNeighbor(neighbors, getCell(coordinates.move(0, 1)));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 1)));
-
-        return neighbors;
-    }
-
-    private void addNeighbor(final List<Cell> neighbors, final Optional<Cell> cell) {
-        cell
-                .ifPresent(neighbors::add);
-    }
-
-    private Optional<Cell> getCell(Coordinates coordinates) {
+    @Override
+    public Optional<Cell> getCell(Coordinates coordinates) {
 
         try {
             return Optional.of(this.matrix[coordinates.y()][coordinates.x()]);

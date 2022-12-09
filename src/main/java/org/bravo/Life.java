@@ -1,6 +1,5 @@
 package org.bravo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -8,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class Life {
+public class Life extends CellsWrapper{
 
 
-    Map<Integer, List<Cell>> mapOfCells = new LinkedHashMap();
+    private Map<Integer, List<Cell>> mapOfCells;
 
     public Life(Seed seed) {
 
@@ -45,7 +44,7 @@ public class Life {
 
     private Cell newGenerationFromCell(Coordinates coordinates) {
 
-        if (getCell_(coordinates).get().isAlive()) {
+        if (getCell(coordinates).get().isAlive()) {
             return newGenerationFromAliveCell(coordinates);
         } else {
             return newGenerationFromDeadCell(coordinates);
@@ -78,39 +77,21 @@ public class Life {
                 .count();
     }
 
-    private List<Cell> getNeighbors(Coordinates coordinates) {
-        List<Cell> neighbors = new ArrayList<>();
-        addNeighbor(neighbors, getCell_(coordinates.move(-1, -1)));
-        addNeighbor(neighbors, getCell_(coordinates.move(0, -1)));
-        addNeighbor(neighbors, getCell_(coordinates.move(1, -1)));
 
-        addNeighbor(neighbors, getCell_(coordinates.move(-1, 0)));
-        addNeighbor(neighbors, getCell_(coordinates.move(1, 0)));
-
-        addNeighbor(neighbors, getCell_(coordinates.move(-1, 1)));
-        addNeighbor(neighbors, getCell_(coordinates.move(0, 1)));
-        addNeighbor(neighbors, getCell_(coordinates.move(1, 1)));
-
-        return neighbors;
-    }
-
-    private void addNeighbor(final List<Cell> neighbors, final Optional<Cell> cell) {
-        cell
-                .ifPresent(neighbors::add);
-    }
-
-
-    public Optional<Cell> getCell(int x, int y) {
-        return getCell_(new Coordinates(x,y));
-    }
-
-    public Optional<Cell> getCell_(Coordinates coordinates) {
+    @Override
+    public Optional<Cell> getCell(final Coordinates coordinates) {
         return Optional.ofNullable(this.mapOfCells.get(coordinates.y()))
                 .orElse(List.of())
                 .stream()
                 .filter(cell -> cell.getCoordinates().equals(coordinates))
                 .findAny();
     }
+
+
+    public Optional<Cell> getCell(int x, int y) {
+        return getCell(new Coordinates(x,y));
+    }
+
 
     public void print() {
         this.mapOfCells.keySet().stream()
