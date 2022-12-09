@@ -19,29 +19,38 @@ public class Life {
 
         for (int x = 0; x < matrix.length; x++) {
             for (int y = 0; y < matrix[x].length; y++) {
-                if(getCell(x,y).get().isAlive()){
-                    final long aliveNeighbors = countAliveNeighbors(x, y);
-
-                    if(aliveNeighbors == 2 || aliveNeighbors == 3) {
-                        newMatrix[x][y] = Cell.alive(); // or Cell.alive();
-                    } else {
-                        newMatrix[x][y] = Cell.dead();
-                    }
-
-                } else {
-                    final long aliveNeighbors = countAliveNeighbors(x, y);
-
-                    if(aliveNeighbors == 3) {
-                        newMatrix[x][y] = Cell.alive(); // or Cell.alive();
-                    } else {
-                        newMatrix[x][y] = Cell.dead();
-                    }
-                }
-
+                newMatrix[x][y] = newGenerationFromCell(x, y);
             }
         }
-
         this.matrix = newMatrix;
+    }
+
+    private Cell newGenerationFromCell(final int x, final int y) {
+
+        if(getCell(x, y).get().isAlive()){
+            return newGenerationFromAliveCell(x, y);
+        } else {
+            return newGenerationFromDeadCell(x, y);
+        }
+    }
+
+    private Cell newGenerationFromDeadCell(final int x, final int y) {
+        final long aliveNeighbors = countAliveNeighbors(x, y);
+
+        if(aliveNeighbors == 3) {
+            return Cell.alive(); // or Cell.alive();
+        } else {
+            return Cell.dead();
+        }
+    }
+
+    private Cell newGenerationFromAliveCell(final int x, final int y) {
+        final long aliveNeighbors = countAliveNeighbors(x, y);
+        if(aliveNeighbors == 2 || aliveNeighbors == 3) {
+             return Cell.alive(); // or Cell.alive();
+        } else {
+            return Cell.dead();
+        }
     }
 
     private long countAliveNeighbors(final int x, final int y) {
