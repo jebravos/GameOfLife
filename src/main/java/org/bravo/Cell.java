@@ -19,8 +19,6 @@ public class Cell implements Comparable<Cell> {
     private Status status;
     private Coordinates coordinates;
 
-    private List<Cell> neighbors;
-
     public static Cell newCell(Status status, Coordinates coordinates){
         return new Cell(status, coordinates);
     }
@@ -56,10 +54,6 @@ public class Cell implements Comparable<Cell> {
     public void print(){
         char c = this.isAlive() ? 'X' : 'O';
         System.out.print(c);
-    }
-
-    public void setNeighbors(List neighbors){
-        this.neighbors = neighbors;
     }
 
     @Override

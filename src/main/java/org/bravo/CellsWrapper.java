@@ -36,10 +36,5 @@ public abstract class CellsWrapper {
 
     }
 
-    protected Optional<Cell> findCell(final Cell cell) {
-        return Optional.ofNullable(cell)
-                .flatMap(c -> findCell(c.getCoordinates()));
-    }
-
     public abstract Optional<Cell> findCell(Coordinates coordinates);
 }
