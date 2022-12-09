@@ -1,10 +1,21 @@
 package org.bravo;
 
+import static org.bravo.Cell.Status.ALIVE;
+import static org.bravo.Cell.Status.DEAD;
+
 public class Cell {
 
-    private int status = 0;
+    enum Status {
+        ALIVE, DEAD
+    }
+
+    private Status status;
 
     private Cell(int status){
+        this.status = status == 0 ? DEAD : ALIVE;
+    }
+
+    private Cell(Status status){
         this.status = status;
     }
 
@@ -17,7 +28,7 @@ public class Cell {
     }
 
     public boolean isAlive(){
-        return this.status == 1;
+        return ALIVE.equals(this.status);
     }
 
     public boolean isDead(){

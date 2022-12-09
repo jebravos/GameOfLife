@@ -6,8 +6,6 @@ import java.util.Optional;
 
 public class Life {
 
-
-
     private Cell[][] matrix;
 
     public Life(Cell[][] seed) {
@@ -39,7 +37,7 @@ public class Life {
         final long aliveNeighbors = countAliveNeighbors(coordinates);
 
         if (aliveNeighbors == 3) {
-            return Cell.alive(); // or Cell.alive();
+            return Cell.alive();
         } else {
             return Cell.dead();
         }
@@ -48,7 +46,7 @@ public class Life {
     private Cell newGenerationFromAliveCell(Coordinates coordinates) {
         final long aliveNeighbors = countAliveNeighbors(coordinates);
         if (aliveNeighbors == 2 || aliveNeighbors == 3) {
-            return Cell.alive(); // or Cell.alive();
+            return Cell.alive();
         } else {
             return Cell.dead();
         }
@@ -76,22 +74,6 @@ public class Life {
 
         return neighbors;
     }
-
-//    private List<Cell> getNeighbors(final int x, final int y) {
-//        List<Cell> neighbors = new ArrayList<>();
-//        addNeighbor(neighbors, x - 1, y - 1);
-//        addNeighbor(neighbors, x, y - 1);
-//        addNeighbor(neighbors, x + 1, y - 1);
-//
-//        addNeighbor(neighbors, x - 1, y);
-//        addNeighbor(neighbors, x + 1, y);
-//
-//        addNeighbor(neighbors, x - 1, y + 1);
-//        addNeighbor(neighbors, x, y + 1);
-//        addNeighbor(neighbors, x + 1, y + 1);
-//
-//        return neighbors;
-//    }
 
     private void addNeighbor(final List<Cell> neighbors, Coordinates coordinates) {
         getCell(coordinates)

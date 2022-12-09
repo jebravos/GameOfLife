@@ -16,7 +16,6 @@ class LifeTests {
                                          // y
     };
 
-
     @Test
     @DisplayName("Any live cell with two or three live neighbours survives.")
     void t0(){
