@@ -61,10 +61,26 @@ class LifeTests {
         // Given seed
         Life life = new Life(seed);
         // When
+        life.print();
+        System.out.println("------------------------------");
         life.tick();
+        life.print();
+        System.out.println("------------------------------");
         // then
-        Assertions.assertTrue(false);
-    }
+        Assertions.assertTrue(life.getCell(0,0).isPresent());
+        Assertions.assertTrue(life.getCell(0,0).get().isDead());
 
+        Assertions.assertTrue(life.getCell(0,2).isPresent());
+        Assertions.assertTrue(life.getCell(0,2).get().isDead());
+
+        Assertions.assertTrue(life.getCell(1,1).isPresent());
+        Assertions.assertTrue(life.getCell(1,1).get().isDead());
+
+        Assertions.assertTrue(life.getCell(2,0).isPresent());
+        Assertions.assertTrue(life.getCell(2,0).get().isDead());
+
+        Assertions.assertTrue(life.getCell(2,2).isPresent());
+        Assertions.assertTrue(life.getCell(2,2).get().isDead());
+    }
 
 }
