@@ -4,10 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-public class Seed extends CellsWrapper {
+public class Seed  {
 
     private Cell[][] matrix;
 
@@ -35,13 +33,4 @@ public class Seed extends CellsWrapper {
         return mapOfCells;
     }
 
-    @Override
-    public Optional<Cell> findCell(Coordinates coordinates) {
-
-        try {
-            return Optional.of(this.matrix[coordinates.y()][coordinates.x()]);
-        } catch (IndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
-    }
 }
