@@ -20,7 +20,7 @@ class LifeTests {
     @DisplayName("Any live cell with two or three live neighbours survives.")
     void t0(){
         // Given seed
-        Life life = new Life(seed);
+        Life life = new Life(new Seed(seed));
         // When
         life.print();
         System.out.println("------------------------------");
@@ -40,7 +40,7 @@ class LifeTests {
     @DisplayName("Any dead cell with three live neighbours becomes a live cell.")
     public void t1(){
         // Given seed
-        Life life = new Life(seed);
+        Life life = new Life(new Seed(seed));
         // When
         life.print();
         System.out.println("------------------------------");
@@ -58,7 +58,7 @@ class LifeTests {
     @DisplayName("All other live cells die in the next generation. Similarly, all other dead cells stay dead.")
     public void t2(){
         // Given seed
-        Life life = new Life(seed);
+        Life life = new Life(new Seed(seed));
         // When
         life.print();
         System.out.println("------------------------------");

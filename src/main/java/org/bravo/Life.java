@@ -10,27 +10,12 @@ import java.util.Optional;
 
 public class Life {
 
-    private Cell[][] matrix;
 
     Map<Integer, List<Cell>> mapOfCells = new LinkedHashMap();
 
-    public Life(Cell[][] seed) {
-        this.matrix = seed;
+    public Life(Seed seed) {
 
-        for (int x = 0; x < seed.length; x++) {
-
-            for (int y = 0; y < seed[x].length; y++) {
-
-                List<Cell> yCells = mapOfCells.computeIfAbsent(y, k -> new LinkedList<>());
-
-                final Cell cell = Cell.newCell(seed[y][x].getStatus(), new Coordinates(x, y));
-                final List<Cell> neighbors = getNeighbors(cell.getCoordinates(), this.matrix);
-                cell.setNeighbors(neighbors);
-                yCells.add(cell);
-
-            }
-
-        }
+        mapOfCells = seed.toMap();
 
     }
 
@@ -61,7 +46,6 @@ public class Life {
     private Cell newGenerationFromCell(Coordinates coordinates) {
 
         if (getCell_(coordinates).get().isAlive()) {
-//        if (getCell(coordinates, this.matrix).get().isAlive()) {
             return newGenerationFromAliveCell(coordinates);
         } else {
             return newGenerationFromDeadCell(coordinates);
@@ -94,21 +78,6 @@ public class Life {
                 .count();
     }
 
-    private List<Cell> getNeighbors(Coordinates coordinates, final Cell[][] matrix1) {
-        List<Cell> neighbors = new ArrayList<>();
-        addNeighbor(neighbors, getCell(coordinates.move(-1, -1), matrix1));
-        addNeighbor(neighbors, getCell(coordinates.move(0, -1), matrix1));
-        addNeighbor(neighbors, getCell(coordinates.move(1, -1), matrix1));
-
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 0), matrix1));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 0), matrix1));
-
-        addNeighbor(neighbors, getCell(coordinates.move(-1, 1), matrix1));
-        addNeighbor(neighbors, getCell(coordinates.move(0, 1), matrix1));
-        addNeighbor(neighbors, getCell(coordinates.move(1, 1), matrix1));
-
-        return neighbors;
-    }
     private List<Cell> getNeighbors(Coordinates coordinates) {
         List<Cell> neighbors = new ArrayList<>();
         addNeighbor(neighbors, getCell_(coordinates.move(-1, -1)));
@@ -130,14 +99,6 @@ public class Life {
                 .ifPresent(neighbors::add);
     }
 
-    public Optional<Cell> getCell(Coordinates coordinates, final Cell[][] matrix) {
-
-        try {
-            return Optional.of(matrix[coordinates.y()][coordinates.x()]);
-        } catch (IndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
-    }
 
     public Optional<Cell> getCell(int x, int y) {
         return getCell_(new Coordinates(x,y));
