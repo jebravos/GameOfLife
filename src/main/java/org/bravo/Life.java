@@ -14,6 +14,9 @@ public class Life extends CellsWrapper {
 
     public Life(Seed seed) {
 
+        if(seed == null){
+            throw new IllegalArgumentException("Seed must not be empty");
+        }
 
 
         mapOfCells = seed.toMap();

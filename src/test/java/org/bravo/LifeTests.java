@@ -100,9 +100,8 @@ class LifeTests {
         @DisplayName("Illegal argument exception when invalid seed")
         void t0() {
 
-            Stream.of(null, EMPTY_SEED)
-                    .forEach(seed -> Assertions.assertThrows(IllegalArgumentException.class, () -> new Life(null)));
-
+            Stream.of((Seed)null)
+                    .forEach(seed -> Assertions.assertThrows(IllegalArgumentException.class, () -> new Life(seed)));
 
         }
 

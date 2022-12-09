@@ -6,6 +6,13 @@ import java.util.stream.Stream;
 
 public abstract class CellsWrapper {
 
+    public long countAliveNeighbors(Cell cell) {
+        return getNeighbors(cell)
+                .stream()
+                .filter(Cell::isAlive)
+                .count();
+    }
+
     protected List<Cell> getNeighbors(Cell reference) {
         final Optional<Cell> cell = findCell(reference.getCoordinates());
 
@@ -14,7 +21,7 @@ public abstract class CellsWrapper {
                 .orElse(List.of());
     }
 
-    protected List<Cell> getNeighbors(Coordinates referencePosition) {
+    private List<Cell> getNeighbors(Coordinates referencePosition) {
         return Stream.of(findCell(referencePosition.fromReference(-1, -1)),
                 findCell(referencePosition.fromReference(0, -1)),
                 findCell(referencePosition.fromReference(1, -1)),
@@ -29,7 +36,7 @@ public abstract class CellsWrapper {
 
     }
 
-    public Optional<Cell> findCell(final Cell cell) {
+    protected Optional<Cell> findCell(final Cell cell) {
         return Optional.ofNullable(cell)
                 .flatMap(c -> findCell(c.getCoordinates()));
     }
