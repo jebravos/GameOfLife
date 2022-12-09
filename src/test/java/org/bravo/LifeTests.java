@@ -25,6 +25,7 @@ class LifeTests {
         // When
         life.tick();
         life.print();
+        System.out.println("------------------------------");
         // then
         Assertions.assertTrue(life.getCell(0,1).isPresent());
         Assertions.assertTrue(life.getCell(0,1).get().isAlive());
@@ -41,8 +42,14 @@ class LifeTests {
         Life life = new Life(seed);
         // When
         life.tick();
+        life.print();
+        System.out.println("------------------------------");
         // then
-        Assertions.assertTrue(false);
+        Assertions.assertTrue(life.getCell(1,0).isPresent());
+        Assertions.assertTrue(life.getCell(1,0).get().isAlive());
+
+        Assertions.assertTrue(life.getCell(2,1).isPresent());
+        Assertions.assertTrue(life.getCell(2,1).get().isAlive());
     }
     @Test
     @DisplayName("All other live cells die in the next generation. Similarly, all other dead cells stay dead.")
