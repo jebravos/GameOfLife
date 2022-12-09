@@ -11,20 +11,17 @@ public class Cell {
 
     private Status status;
 
-    private Cell(int status){
-        this.status = status == 0 ? DEAD : ALIVE;
-    }
 
     private Cell(Status status){
         this.status = status;
     }
 
     public static Cell alive(){
-        return new Cell(1);
+        return new Cell(ALIVE);
     }
 
     public static Cell dead(){
-        return new Cell(0);
+        return new Cell(DEAD);
     }
 
     public boolean isAlive(){
