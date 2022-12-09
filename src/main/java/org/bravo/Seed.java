@@ -1,6 +1,5 @@
 package org.bravo;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,6 @@ public class Seed extends CellsWrapper {
     public Map<Integer, List<Cell>> toMap(){
         Map<Integer, List<Cell>> mapOfCells = new LinkedHashMap();
         for (int x = 0; x < this.matrix.length; x++) {
-
             for (int y = 0; y < this.matrix[x].length; y++) {
 
                 List<Cell> yCells = mapOfCells.computeIfAbsent(y, k -> new LinkedList<>());

@@ -13,9 +13,7 @@ public class Life extends CellsWrapper{
     private Map<Integer, List<Cell>> mapOfCells;
 
     public Life(Seed seed) {
-
         mapOfCells = seed.toMap();
-
     }
 
     public void tick_() {
