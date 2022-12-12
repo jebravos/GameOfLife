@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import static org.bravo.Cell.alive;
 import static org.bravo.Cell.dead;
 import static org.bravo.Patterns.BLINKER;
+import static org.bravo.Patterns.TOAD;
 
 class LifeTests {
 
@@ -114,9 +115,9 @@ class LifeTests {
     class Print {
         @Test
         void printSeed() {
-            Life life = new Life(new Seed(BLINKER));
+            Life life = new Life(new Seed(TOAD));
             // When
-            IntStream.range(0, 10)
+            IntStream.range(0, 1000)
                     .forEach(i -> {
                         tick(life);
                     });
