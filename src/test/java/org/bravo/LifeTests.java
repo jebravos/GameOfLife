@@ -5,25 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.bravo.Cell.alive;
-import static org.bravo.Cell.dead;
-import static org.bravo.Patterns.BLINKER;
+import static org.bravo.Patterns.SEED;
 import static org.bravo.Patterns.TOAD;
 
 class LifeTests {
-
-
-    private Cell[][] seed = {
-            {alive(new Coordinates(0, 0)), dead(new Coordinates(1, 0)), alive(new Coordinates(2, 0))}, // 0 1 2 x
-            {alive(new Coordinates(0, 1)), dead(new Coordinates(1, 1)), dead(new Coordinates(2, 1))},  // 1
-            {dead(new Coordinates(0, 2)), alive(new Coordinates(1, 2)), alive(new Coordinates(2, 2))}  // 2
-            // y
-    };
 
 
     @Nested
@@ -32,7 +20,7 @@ class LifeTests {
         @DisplayName("Any live cell with two or three live neighbours survives.")
         void t0() {
             // Given seed
-            Life life = new Life(new Seed(seed));
+            Life life = new Life(new Seed(SEED));
             // When
             life.print();
             System.out.println("------------------------------");
@@ -52,7 +40,7 @@ class LifeTests {
         @DisplayName("Any dead cell with three live neighbours becomes a live cell.")
         public void t1() {
             // Given seed
-            Life life = new Life(new Seed(seed));
+            Life life = new Life(new Seed(SEED));
             // When
             life.print();
             System.out.println("------------------------------");
@@ -71,7 +59,7 @@ class LifeTests {
         @DisplayName("All other live cells die in the next generation. Similarly, all other dead cells stay dead.")
         public void t2() {
             // Given seed
-            Life life = new Life(new Seed(seed));
+            Life life = new Life(new Seed(SEED));
             // When
             life.print();
             System.out.println("------------------------------");
