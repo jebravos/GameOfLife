@@ -5,15 +5,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.bravo.Cell.alive;
 import static org.bravo.Cell.dead;
+import static org.bravo.Patterns.BLINKER;
 
 class LifeTests {
 
-    public static final Cell[][] EMPTY_CELLS = {};
-    public static final Seed EMPTY_SEED = new Seed(EMPTY_CELLS);
+
     private Cell[][] seed = {
             {alive(new Coordinates(0, 0)), dead(new Coordinates(1, 0)), alive(new Coordinates(2, 0))}, // 0 1 2 x
             {alive(new Coordinates(0, 1)), dead(new Coordinates(1, 1)), dead(new Coordinates(2, 1))},  // 1
@@ -100,11 +103,31 @@ class LifeTests {
         @DisplayName("Illegal argument exception when invalid seed")
         void t0() {
 
-            Stream.of((Seed)null)
+            Stream.of((Seed) null)
                     .forEach(seed -> Assertions.assertThrows(IllegalArgumentException.class, () -> new Life(seed)));
 
         }
 
+    }
+
+    @Nested
+    class Print {
+        @Test
+        void printSeed() {
+            Life life = new Life(new Seed(BLINKER));
+            // When
+            IntStream.range(0, 10)
+                    .forEach(i -> {
+                        tick(life);
+                    });
+
+        }
+
+        private void tick(final Life life)  {
+            life.print();
+            System.out.println("------------------------------");
+            life.tick();
+        }
     }
 
 }
